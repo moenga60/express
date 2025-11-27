@@ -1,5 +1,5 @@
 import express from "express";
-import { searchController, usernameController } from "./controller.js";
+import { userLogin, userSignup } from "./controller.js";
 
 const app = express();
 
@@ -10,12 +10,8 @@ app.get("/", (req, res) => {
   res.send("Hellow Express da");
 });
 
-// dynamiic routing
-app.get("/user/:username", usernameController);
-
-// query string
-// /search?keyword=express
-app.get("/search", searchController);
+app.get("/user/login", userLogin);
+app.get("/user/signup", userSignup);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
