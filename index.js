@@ -12,9 +12,11 @@ app.get("/", (req, res) => {
 
 app.use("/user", router);
 
+app.use(express.json());
+
 //post
 
-app.post("/users", express.json(), (req, res) => {
+app.post("/users", (req, res) => {
   const { name, email } = req.body;
   res.json({
     message: `User ${name} with email ${email} created successfully`,
@@ -22,7 +24,7 @@ app.post("/users", express.json(), (req, res) => {
 });
 
 //put method
-app.put("/users/:id", express.json(), (req, res) => {
+app.put("/users/:id", (req, res) => {
   const userId = req.params.id;
   const { name, email } = req.body;
   res.json({
@@ -30,6 +32,13 @@ app.put("/users/:id", express.json(), (req, res) => {
   });
 });
 
+//delete method
+app.delete('/users/:id', (req, res)=>{
+  const userId = req.params.id
+  res.json({
+    message:`user with id ${userId} deleted successfully`
+  })
+})
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
