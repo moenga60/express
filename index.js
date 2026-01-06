@@ -1,5 +1,4 @@
 import express from "express";
-import router from "./route.js";
 
 const app = express();
 
@@ -10,35 +9,22 @@ app.get("/", (req, res) => {
   res.send("Hellow Express da");
 });
 
-app.use("/user", router);
-
-app.use(express.json());
-
-//post
-
-app.post("/users", (req, res) => {
-  const { name, email } = req.body;
+//multiple params
+app.get("/things/:name/:id", (req, res) => {
+  const { name, id } = req.params;
   res.json({
-    message: `User ${name} with email ${email} created successfully`,
+    id,
+    name,
   });
 });
 
-//put method
-app.put("/users/:id", (req, res) => {
-  const userId = req.params.id;
-  const { name, email } = req.body;
-  res.json({
-    message: `User ${userId} updated to ${name}, ${email}`,
-  });
+//catch all invalid routes
+app.get('*', (req, res) => {
+  res.send(
+    "Sorry, this is an invalid URL."
+  );
 });
 
-//delete method
-app.delete('/users/:id', (req, res)=>{
-  const userId = req.params.id
-  res.json({
-    message:`user with id ${userId} deleted successfully`
-  })
-})
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
